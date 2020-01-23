@@ -1,0 +1,49 @@
+{
+  "20200109" : [
+    {
+      "key": 0,
+      "to": "아무개",
+      "otherCount": 10,
+      "sendType": "SMS",
+      "sendTime": "151520",
+      "succ": 90,
+      "fail": 5,
+      "wait": 5,
+      "msg": "2020 새해 복 많이 받으세요"
+    },
+    {
+      "key": 1,
+      "to": "01011112222",
+      "otherCount": 5,
+      "sendType": "LMS",
+      "sendTime": "151620",
+      "succ": 10,
+      "fail": 5,
+      "wait": 5,
+      "msg": "오후 동아리 모임 있습니다~"
+    }
+  ],"20200110" : [
+    {
+      "key": 2,
+      "to": "아무개",
+      "otherCount": 10,
+      "sendType": "SMS",
+      "sendTime": "151520",
+      "succ": 90,
+      "fail": 5,
+      "wait": 5,
+      "msg": "2020 새해 복 많이 받으세요"
+    },
+    {
+      "key": 3,
+      "to": "01011112222",
+      "otherCount": 5,
+      "sendType": "LMS",
+      "sendTime": "151620",
+      "succ": 10,
+      "fail": 5,
+      "wait": 5,
+      "msg": "오후 동아리 모임 있습니다~"
+    }
+  ]
+}
