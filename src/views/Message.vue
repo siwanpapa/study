@@ -67,7 +67,8 @@
 
     <v-content>
       <v-container fill-height>
-        <router-view />
+        <!-- <router-view /> -->
+        <Address></Address>
       </v-container>
     </v-content>
     <!-- <v-footer app>
@@ -77,7 +78,11 @@
 </template>
 
 <script>
+import Address from '@/components/addressBook/Address.vue';
 export default {
+  components: {
+    Address
+  },
   data() {
     return {
       item: 0,
