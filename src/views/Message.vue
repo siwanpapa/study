@@ -14,11 +14,17 @@
       </v-btn>
       <!-- 툴바 아래에 확장하여 사용 -->
       <template v-slot:extension>
-        <span class="font-weight-bold">동아리방 25명</span>
+        <v-btn text @click.stop="visible = true">
+          <span class="title">동아리방 25명</span>
+        </v-btn>
         <span class="ml-10"
           >오늘 총 발송 건수 00건 | 성공 00건 | 실패 00건</span
         >
+        <v-btn color="indigo" text icon @click.stop="dialog.addr = true">
+          <v-icon>mdi-account</v-icon>
+        </v-btn>
       </template>
+      <MemberListDialog :visible.sync="visible" />
     </v-app-bar>
 
     <v-navigation-drawer app clipped permanent>
@@ -67,8 +73,11 @@
 
     <v-content>
       <v-container fill-height>
-        <!-- <router-view /> -->
-        <Address></Address>
+        <router-view />
+        <Address
+          v-model="dialog.addr"
+          v-on:close="val => (dialog.addr = val)"
+        />
       </v-container>
     </v-content>
     <!-- <v-footer app>
@@ -79,9 +88,11 @@
 
 <script>
 import Address from '@/components/addressBook/Address.vue';
+import MemberListDialog from '@/components/message/MemberListDialog.vue';
 export default {
   components: {
-    Address
+    Address,
+    MemberListDialog
   },
   data() {
     return {
@@ -102,7 +113,12 @@ export default {
           icon: 'mdi-account-group-outline',
           time: '2020.01.03 13:00:01'
         }
-      ]
+      ],
+      dialog: {
+        addr: false,
+        memList: false
+      },
+      visible: false
     };
   },
   methods: {

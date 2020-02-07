@@ -13,14 +13,14 @@ module.exports = {
   ],
   plugins: ['prettier'],
   rules: {
-    'prettier/prettier': [
+    /* 'prettier/prettier': [
       'error',
       // 아래 규칙들은 개인 선호에 따라 prettier 문법 적용
       // https://prettier.io/docs/en/options.html
       {
         singleQuote: true
       },
-    ],
+    ], */
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   },

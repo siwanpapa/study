@@ -1,51 +1,57 @@
 <template lang="pug">
-  v-card(width="1000" min-width="800")
-    v-card-title 주소록
-    v-card-text 
-      v-row
-        v-col(cols="3")
-          v-treeview(:items="address" open-on-click dense activatable :active.sync="active" :open.sync="open")
-            template( v-slot:prepend="{ item, active}" )
-              v-icon {{item.id === 1 ? 'mdi-folder' : 'mdi-account-multiple'}}
-            template( v-slot:append="{ item }" )
-              div(class="ml-2") {{item.count}}
-        v-divider(vertical)
-        v-col(cols="4" class="d-flex")
-          v-scroll-x-transition(mode="out-in" )
-            v-sheet(v-if="!selected") 그룹을 선택해주세요
-            v-card( v-else flat :key="selected.id")
-              v-list(dense)
-                v-list-item-group( v-model="addrModel" multiple )
-                  v-list-item(v-for="item in selected.items" :key="item.id")
-                    v-list-item-icon 
-                      v-icon mdi-face
-                    v-list-item-content
-                      v-list-item-title {{item.name}} {{item.tel}}
-        v-divider(vertical)
-        v-col(cols="4")
-          v-sheet
-            v-row
-              v-col(cols="2")
-                v-btn(fab x-small class="mb-3")
-                  v-icon mdi-arrow-right
-                v-btn(fab x-small)
-                  v-icon mdi-arrow-left
-              v-col(cols="10")
-                v-scroll-y-transition(mode="out-in" )
-                  div hello
-
-                  
-                    
-
-                           
+  v-dialog( v-model="value" max-width="750" @click:outside="closeDialog" @keydown.esc="closeDialog" )
+    v-card
+      v-card-title 주소록
+      v-card-text 
+        v-row
+          v-col(cols="3")
+            v-treeview(:items="address" open-on-click dense activatable :active.sync="active" color="warning")
+              template( v-slot:prepend="{ item, active}" )
+                v-icon {{ item.id === 1 ? 'mdi-folder' : 'mdi-account-multiple' }}
+              template( v-slot:append="{ item }" )
+                div(class="ml-2") {{item.count}}
+          v-divider(vertical)
+          v-col(cols="4" class="d-flex")
+            v-scroll-x-transition(mode="out-in" )
+              v-sheet(v-if="!selected") 그룹을 선택해주세요
+              v-card( v-else flat :key="selected.id")
+                v-list(dense)
+                  v-list-item-group( v-model="selection" multiple )
+                    template(v-for="item in selected.items")
+                      v-list-item(:key="item.id" :value="item" active-class="deep-purple--text text--accent-4" )
+                        template(v-slot:default="{active, toggle}")
+                          v-list-item-icon 
+                            v-icon mdi-face
+                          v-list-item-content
+                            v-list-item-title {{`${item.name} ${item.tel}`}}
+                          v-list-item-action
+                            v-checkbox(:input-value="active" :true-value="item" color="deep-purple accent-4" @click="toggle")
+          v-divider(vertical)
+          v-col(cols="4")
+            //- v-sheet(v-if="!selected") 그룹을 선택해주세요
+            v-sheet {{ `${selection.length}명 선택` }}
+            v-scroll-y-transition(mode="out-in" )
+              v-chip-group(column)
+                v-chip(v-for="(select, idx) in selection" :key="idx" close @click:close="remove(select)") {{select.name}}
+      v-card-actions
+        v-spacer
+        v-btn( @click="closeDialog" text ) 닫기
+        v-btn( @click="closeDialog" text ) 추가하기
+          
+                
 </template>
 
 <script>
 export default {
+  props: {
+    value: {
+      type: null
+    }
+  },
   data() {
     return {
+      selection: [],
       open: [],
-      addrModel: [],
       item: [],
       active: [],
       address: [
@@ -81,7 +87,7 @@ export default {
         },
         {
           id: 4,
-          name: '명동 지점',
+          name: '을지로 지점',
           count: 25,
           items: [
             { name: '이씨1', tel: '01011112222' },
@@ -101,12 +107,13 @@ export default {
         .catch(err => console.warn(err)); */
       console.info('## call methods!!');
     },
-    reset() {
-      this.addrModel = [];
+    remove(item) {
+      this.selection.splice(this.selection.indexOf(item), 1);
+      this.selection = [...this.selection];
+    },
+    closeDialog() {
+      this.$emit('close', false);
     }
-  },
-  watch: {
-    selected: 'reset'
   },
   computed: {
     selected() {
