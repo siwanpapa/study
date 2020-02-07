@@ -8,18 +8,12 @@
       v-card-title 
         span 문자 받는 사람들 {{memberList.length}} 명
         v-text-field(hide-details dense outlined single-line label="받는사람 검색" append-icon="mdi-magnify")
+        div {{selectItem}}
       v-card-text
-        v-list
-          v-list-item-group(v-model="selected" multiple active-class="pink lighten-1")
-            template(v-for="(item, idx) in memberList")
-              v-list-item(:key="item.name" :value="item" @mouseover="mouseOver(item)" @mouseleave="mouseLeave(item)")
-                v-list-item-icon
-                  v-icon mdi-face
-                v-list-item-content
-                  v-list-item-title {{`${item.name} ${item.tel}`}}
-                v-list-item-action(v-show="item.showClose")
-                  v-btn( @click.stop="remove(idx)" text icon)
-                    v-icon mdi-close-circle
+        v-treeview(return-object item-text="name1" :items="memberList" :active.sync="active" open-on-click dense activatable multiple-active )
+          template( v-slot:append="{ item }" )
+            v-btn( @click="remove(item)" icon text)
+              v-icon mdi-close-circle
       v-card-actions
         v-btn( @click="close" text color="green darken-1") 닫기
         v-spacer
@@ -40,8 +34,8 @@ export default {
   data() {
     return {
       selected: [],
-      showClose: false,
-      // selected: new Map(),
+      open: [],
+      active: [],
       memberList: []
     };
   },
@@ -49,9 +43,8 @@ export default {
     makeMemberList() {
       for (let i = 0; i < 25; i++) {
         this.memberList.push({
-          name: '김개똥' + i,
-          tel: '0101111' + new String(i).padStart(4, '0'),
-          showClose: false
+          id: i,
+          name1: '김개똥' + i + ' | 0101111' + new String(i).padStart(4, 0)
         });
       }
     },
@@ -61,16 +54,13 @@ export default {
       }
       items.forEach(item => {
         }); */
-      this.memberList.splice(idx, 1);
+      // this.memberList.splice(idx, 1);
+      console.info('tag', 'test', idx);
+      const i = this.memberList.findIndex(item => item.id === idx.id);
+      this.memberList.splice(i, 1);
     },
-    test(o) {
-      console.info('tag', '## TEST', o);
-    },
-    mouseOver(item) {
-      item.showClose = true;
-    },
-    mouseLeave(item) {
-      item.showClose = false;
+    test($event) {
+      console.info('tag', $event);
     },
     close() {
       return this.$emit('update:visible', false);
@@ -78,7 +68,7 @@ export default {
   },
   computed: {
     selectItem() {
-      return this.selected;
+      return this.active;
     }
   },
   created() {
