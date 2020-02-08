@@ -1,12 +1,12 @@
 <template lang="pug">
-  v-dialog( v-model="value" max-width="750" @click:outside="closeDialog" @keydown.esc="closeDialog" )
+  v-dialog( v-model="visible" max-width="750" @click:outside="close" @keydown.esc="close" )
     v-card
       v-card-title 주소록
       v-card-text 
         v-row
           v-col(cols="3")
             v-treeview(:items="address" open-on-click dense activatable :active.sync="active" color="warning")
-              template( v-slot:prepend="{ item, active}" )
+              template( v-slot:prepend="{ item }" )
                 v-icon {{ item.id === 1 ? 'mdi-folder' : 'mdi-account-multiple' }}
               template( v-slot:append="{ item }" )
                 div(class="ml-2") {{item.count}}
@@ -35,8 +35,8 @@
                 v-chip(v-for="(select, idx) in selection" :key="idx" close @click:close="remove(select)") {{select.name}}
       v-card-actions
         v-spacer
-        v-btn( @click="closeDialog" text ) 닫기
-        v-btn( @click="closeDialog" text ) 추가하기
+        v-btn( @click="close" text ) 닫기
+        v-btn( @click="close" text ) 추가하기
           
                 
 </template>
@@ -44,8 +44,10 @@
 <script>
 export default {
   props: {
-    value: {
-      type: null
+    visible: {
+      type: Boolean,
+      require: true,
+      default: false
     }
   },
   data() {
@@ -111,8 +113,8 @@ export default {
       this.selection.splice(this.selection.indexOf(item), 1);
       this.selection = [...this.selection];
     },
-    closeDialog() {
-      this.$emit('close', false);
+    close() {
+      this.$emit('update:visible', false);
     }
   },
   computed: {

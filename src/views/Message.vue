@@ -14,7 +14,7 @@
       </v-btn>
       <!-- 툴바 아래에 확장하여 사용 -->
       <template v-slot:extension>
-        <v-btn text @click.stop="visible = true">
+        <v-btn text @click.stop="dialog.memList = true">
           <span class="title">동아리방 25명</span>
         </v-btn>
         <span class="ml-10"
@@ -24,7 +24,11 @@
           <v-icon>mdi-account</v-icon>
         </v-btn>
       </template>
-      <MemberListDialog :visible.sync="visible" />
+      <MemberListDialog
+        :visible.sync="dialog.memList"
+        v-on:openAddr="dialog.addr = true"
+      />
+      <Address :visible.sync="dialog.addr" />
     </v-app-bar>
 
     <v-navigation-drawer app clipped permanent>
@@ -74,10 +78,6 @@
     <v-content>
       <v-container fill-height>
         <router-view />
-        <Address
-          v-model="dialog.addr"
-          v-on:close="val => (dialog.addr = val)"
-        />
       </v-container>
     </v-content>
     <!-- <v-footer app>
@@ -117,8 +117,7 @@ export default {
       dialog: {
         addr: false,
         memList: false
-      },
-      visible: false
+      }
     };
   },
   methods: {
@@ -149,8 +148,5 @@ export default {
   position: sticky;
   top: 0;
   z-index: 10;
-}
-.background {
-  background: yellow;
 }
 </style>

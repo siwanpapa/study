@@ -24,7 +24,7 @@
         v-btn( @click="close" text color="green darken-1") 닫기
         v-spacer
         v-btn( @click="" text color="green darken-1") 제거하기
-        v-btn( @click="" text color="green darken-1") 추가하기
+        v-btn( @click="$emit('openAddr')" text color="green darken-1") 추가하기
           
 </template>
 
@@ -50,7 +50,7 @@ export default {
       for (let i = 0; i < 25; i++) {
         this.memberList.push({
           name: '김개똥' + i,
-          tel: '0101111' + new String(i).padStart(4, '0'),
+          tel: '0101111' + String(i).padStart(4, '0'),
           showClose: false
         });
       }
@@ -73,7 +73,7 @@ export default {
       item.showClose = false;
     },
     close() {
-      return this.$emit('update:visible', false);
+      this.$emit('update:visible', false);
     }
   },
   computed: {
@@ -87,8 +87,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.show-btns {
-  color: rgba(255, 255, 255, 1) !important;
-}
-</style>
+<style scoped></style>
