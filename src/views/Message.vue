@@ -77,7 +77,8 @@
 
     <v-content>
       <v-container fill-height>
-        <router-view />
+        <!--        <router-view />-->
+        <AddRecipient />
       </v-container>
     </v-content>
     <!-- <v-footer app>
@@ -89,10 +90,12 @@
 <script>
 import Address from '@/components/addressBook/Address.vue';
 import MemberListDialog from '@/components/message/MemberListDialog.vue';
+import AddRecipient from '@/components/message/AddRecipient.vue';
 export default {
   components: {
     Address,
-    MemberListDialog
+    MemberListDialog,
+    AddRecipient
   },
   data() {
     return {
