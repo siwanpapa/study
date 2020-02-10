@@ -1,34 +1,67 @@
 <template lang="pug">
-  v-card(width="700" max-height=500)
-    v-card-title 문자 받는사람 추가
-    v-card-text
-      v-tabs
-        v-tab 직접 추가
-        v-tab 주소록 추가
-        v-tab-item
-          v-container(fluid class="d-flex")
-            v-textarea(v-model="telList" auto-grow outlined single-line label="문자받는 연락처를 추가해주세요.")
-            v-scroll-x-transition(mode="out-in" )
-              v-sheet(v-if="!telList") 그룹을 선택해주세요
-              v-card( v-else flat)
-                v-list(dense)
-                  v-list-item-group( v-model="selection" multiple )
-                    template(v-for="(item, idx) in procTel")
-                      v-list-item(:key="idx" :value="item" active-class="deep-purple--text text--accent-4" )
-                        template(v-slot:default="{active, toggle}")
-                          v-list-item-icon
-                            v-icon mdi-face
-                          v-list-item-content
-                            v-list-item-title {{item}}
-                          v-list-item-action
-                            v-checkbox(:input-value="active" :true-value="item" color="deep-purple accent-4" @click="toggle")
-        v-tab-item
-          v-card
-            v-card-title 주소록 추가..
-    v-card-actions
-      v-spacer
-      v-btn( @click="close" text ) 닫기
-      v-btn( @click="close" text ) 추가하기
+  v-dialog( v-model="visible" max-width="750" @click:outside="close" @keydown.esc="close" )
+    v-card
+      v-card-title 문자 받는사람 추가
+      v-card-text
+        v-row
+          v-col(cols="8")
+            v-tabs
+              v-tab 직접 추가
+              v-tab 주소록 추가
+              v-tab-item
+                //- v-container(fluid class="d-flex")
+                v-row
+                  v-col
+                    v-card( flat width="200")
+                      v-textarea(v-model="telList" auto-grow outlined single-line label="문자받는 연락처를 추가해주세요.")
+                  v-col
+                    v-scroll-x-transition(mode="out-in" )
+                      v-sheet(v-if="!telList") 그룹을 선택해주세요
+                      v-card( v-else flat width="200")
+                        v-list(dense)
+                          v-list-item-group( v-model="selection" multiple )
+                            template(v-for="(item, idx) in procTel")
+                              v-list-item(:key="idx" :value="item" active-class="deep-purple--text text--accent-4" )
+                                template(v-slot:default="{active, toggle}")
+                                  v-list-item-icon
+                                    v-icon mdi-face
+                                  v-list-item-content
+                                    v-list-item-title {{`${item.name} ${item.tel}`}}
+                                  v-list-item-action
+                                    v-checkbox(:input-value="active" :true-value="item" color="deep-purple accent-4" @click="toggle")
+              v-tab-item
+                v-row
+                  v-col
+                    v-treeview(:items="address" open-on-click dense activatable :active.sync="active" color="warning")
+                      template( v-slot:prepend="{ item }" )
+                        v-icon {{ item.id === 1 ? 'mdi-folder' : 'mdi-account-multiple' }}
+                      template( v-slot:append="{ item }" )
+                        div(class="ml-2") {{item.count}}
+                  v-divider(vertical)
+                  v-col
+                    v-scroll-x-transition(mode="out-in" )
+                      v-sheet(v-if="!selected") 그룹을 선택해주세요
+                      v-card( v-else flat :key="selected.id")
+                        v-list(dense)
+                          v-list-item-group( v-model="selection" multiple )
+                            template(v-for="item in selected.items")
+                              v-list-item(:key="item.id" :value="item" active-class="deep-purple--text text--accent-4" )
+                                template(v-slot:default="{active, toggle}")
+                                  v-list-item-icon 
+                                    v-icon mdi-face
+                                  v-list-item-content
+                                    v-list-item-title {{`${item.name} ${item.tel}`}}
+                                  v-list-item-action
+                                    v-checkbox(:input-value="active" :true-value="item" color="deep-purple accent-4" @click="toggle")
+          v-col(cols="4")
+            v-sheet {{ `${selection.length}명 선택` }}
+              v-scroll-y-transition(mode="out-in" )
+                v-chip-group(column)
+                  v-chip(v-for="(select, idx) in selection" :key="idx" close @click:close="remove(select)") {{select.name || select}}
+      v-card-actions
+        v-spacer
+        v-btn( @click="close" text ) 닫기
+        v-btn( @click="close" text ) 추가하기
 
 
 </template>
@@ -48,7 +81,51 @@ export default {
       tab: null,
       showInput: true,
       selection: [],
-      telList: ''
+      telList: '',
+      active: [],
+      address: [
+        {
+          id: 1,
+          name: '전체',
+          count: '',
+          items: [
+            { name: '홍길동1', tel: '01011112222' },
+            { name: '홍길동2', tel: '01011112223' }
+          ]
+        },
+        {
+          id: 2,
+          name: '강북 지점',
+          count: 20,
+          items: [
+            { name: '아무개1', tel: '01011112222' },
+            { name: '아무개2', tel: '01011112223' },
+            { name: '아무개3', tel: '01011112224' }
+          ]
+        },
+        {
+          id: 3,
+          name: '명동 지점',
+          count: 25,
+          items: [
+            { name: '김씨1', tel: '01011112222' },
+            { name: '김씨2', tel: '01011112223' },
+            { name: '김씨3', tel: '01011112224' },
+            { name: '김씨4', tel: '01011112225' }
+          ]
+        },
+        {
+          id: 4,
+          name: '을지로 지점',
+          count: 25,
+          items: [
+            { name: '이씨1', tel: '01011112222' },
+            { name: '이씨2', tel: '01011112223' },
+            { name: '이씨3', tel: '01011112224' },
+            { name: '이씨4', tel: '01011112225' }
+          ]
+        }
+      ]
     };
   },
   methods: {
@@ -73,13 +150,22 @@ export default {
   computed: {
     procTel() {
       const regex = /[^0-9]/g;
-      let res = this.telList
+      const res = this.telList
         .split('\n')
-        .map(item => {
-          return (item || '').replace(regex, '');
+        .map((item, idx) => {
+          const tel = (item || '').replace(regex, '');
+          return {
+            name: `이름없음${idx}`,
+            tel
+          };
         })
         .filter(item => item !== '');
       return res;
+    },
+    selected() {
+      if (!this.active.length) return undefined;
+      const id = this.active[0];
+      return this.address.find(user => user.id === id);
     }
   },
   created() {

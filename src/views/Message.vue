@@ -28,7 +28,7 @@
         :visible.sync="dialog.memList"
         v-on:openAddr="dialog.addr = true"
       />
-      <Address :visible.sync="dialog.addr" />
+      <AddRecipient :visible.sync="dialog.addr" />
     </v-app-bar>
 
     <v-navigation-drawer app clipped permanent>
@@ -77,8 +77,7 @@
 
     <v-content>
       <v-container fill-height>
-        <!--        <router-view />-->
-        <AddRecipient />
+        <router-view />
       </v-container>
     </v-content>
     <!-- <v-footer app>
@@ -88,12 +87,10 @@
 </template>
 
 <script>
-import Address from '@/components/addressBook/Address.vue';
 import MemberListDialog from '@/components/message/MemberListDialog.vue';
 import AddRecipient from '@/components/message/AddRecipient.vue';
 export default {
   components: {
-    Address,
     MemberListDialog,
     AddRecipient
   },
