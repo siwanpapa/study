@@ -1,5 +1,6 @@
+// 수신자 추가(직접, 주소록) 다이얼로그
 <template lang="pug">
-  v-dialog( v-model="visible" max-width="750" @click:outside="close" @keydown.esc="close" )
+  v-dialog( v-model="visible" width="750" max-width="750" scrollable @click:outside="close" @keydown.esc="close" )
     v-card
       v-card-title 문자 받는사람 추가
       v-card-text
@@ -21,7 +22,7 @@
                         v-list(dense)
                           v-list-item-group( v-model="selection" multiple )
                             template(v-for="(item, idx) in procTel")
-                              v-list-item(:key="idx" :value="item" active-class="deep-purple--text text--accent-4" )
+                              v-list-item(:key="idx" :value="item" active-class="deep-purple--text text--accent-4" title="hello")
                                 template(v-slot:default="{active, toggle}")
                                   v-list-item-icon
                                     v-icon mdi-face
@@ -68,7 +69,6 @@
 
 <script>
 export default {
-  name: 'AddRecipient',
   props: {
     visible: {
       type: Boolean,

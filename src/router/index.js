@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
-import Message from '../views/Message.vue';
+import Message from '../views/Message/Message.vue';
 import Join from '../views/Join.vue';
 // @ is an alias to /src
-import Content from '@/components/message/Content.vue';
+import Content from '../views/Message/components/Content.vue';
 
 Vue.use(VueRouter);
 

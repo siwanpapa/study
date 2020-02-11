@@ -87,8 +87,8 @@
 </template>
 
 <script>
-import MemberListDialog from '@/components/message/MemberListDialog.vue';
-import AddRecipient from '@/components/message/AddRecipient.vue';
+import MemberListDialog from './components/MemberListDialog.vue';
+import AddRecipient from './components/AddRecipient.vue';
 export default {
   components: {
     MemberListDialog,
