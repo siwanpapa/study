@@ -5,8 +5,7 @@
         v-spacer
         v-btn( @click="close" icon text)
           v-icon mdi-close
-      v-card-title 
-        span 문자 받는 사람들 {{memberList.length}} 명
+      v-card-title 문자 받는 사람들 {{memberList.length}} 명
         v-text-field(hide-details dense outlined single-line label="받는사람 검색" append-icon="mdi-magnify")
       v-card-text
         v-list
