@@ -1,11 +1,17 @@
 <template>
   <div class="wrap d-flex flex-column fill-height">
+    <Detail :visible.sync="showDetail" />
     <div class="content">
       <div v-for="(value, name) in data" :key="name">
         <div class="d-flex mb-3">
           <v-chip outlined v-text="name" class="mx-auto"></v-chip>
         </div>
-        <v-card class="mb-3" v-for="subValue in value" :key="subValue.key">
+        <v-card
+          class="mb-3"
+          v-for="subValue in value"
+          :key="subValue.key"
+          @click="showDetail = true"
+        >
           <v-card-text>
             <span class="font-weight-bold">{{ subValue.to }} 님</span>
             <span v-if="subValue.otherCount > 0">
@@ -61,11 +67,16 @@
 
 <script>
 import axios from 'axios';
+import Detail from './Detail.vue';
 export default {
+  components: {
+    Detail
+  },
   props: ['no'],
   data() {
     return {
       rows: 2,
+      showDetail: false,
       data: {}
     };
   },

@@ -77,8 +77,8 @@
 
     <v-content>
       <v-container fill-height>
-        <!-- <router-view /> -->
-        <Detail />
+        <router-view />
+        <!-- <Detail /> -->
       </v-container>
     </v-content>
     <!-- <v-footer app>
@@ -90,12 +90,12 @@
 <script>
 import MemberListDialog from './components/MemberListDialog.vue';
 import AddRecipient from './components/AddRecipient.vue';
-import Detail from './components/Detail.vue';
+// import Detail from './components/Detail.vue';
 export default {
   components: {
     MemberListDialog,
-    AddRecipient,
-    Detail
+    AddRecipient
+    // Detail
   },
   data() {
     return {
