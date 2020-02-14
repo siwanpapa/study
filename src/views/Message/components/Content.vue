@@ -34,9 +34,28 @@
         </v-card>
       </div>
     </div>
-    <div>
+    <v-sheet class="footer">
+      <div class="d-flex mb-1 align-center">
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <v-btn text icon @click="isReserve = !isReserve">
+              <v-icon v-on="on" :class="{ 'deep-orange--text': isReserve }"
+                >mdi-alarm</v-icon
+              >
+            </v-btn>
+          </template>
+          <span>예약 전송</span>
+        </v-tooltip>
+        <template v-if="isReserve">
+          <DatePicker :date.sync="date1" />
+          <TimePicker :time.sync="time" />
+        </template>
+        <v-spacer></v-spacer>
+        <span>{{ msgByte }}/80</span>
+      </div>
       <v-textarea
         label="메시지 입력"
+        v-model="msg"
         solo
         dense
         rows="2"
@@ -44,7 +63,7 @@
         hide-details
         auto-grow
       ></v-textarea>
-    </div>
+    </v-sheet>
     <!--// content end -->
     <!-- 메시지 입력 부분 -->
     <!-- <div class="footer_message">
@@ -68,23 +87,71 @@
 <script>
 import axios from 'axios';
 import Detail from './Detail.vue';
+import DatePicker from '@/components/DatePicker.vue';
+import TimePicker from '@/components/TimePicker.vue';
 export default {
   components: {
-    Detail
+    Detail,
+    DatePicker,
+    TimePicker
   },
   props: ['no'],
   data() {
     return {
       rows: 2,
+      date1: new Date().toISOString().substring(0, 10),
+      time: '',
       showDetail: false,
-      data: {}
+      data: {},
+      isReserve: false,
+      msg: ''
     };
   },
-  methods: {},
+  methods: {
+    getByte(str) {
+      var resultSize = 0;
+      if (str == null) {
+        return 0;
+      }
+
+      for (var i = 0; i < str.length; i++) {
+        var c = escape(str.charAt(i));
+        if (c.length == 1) {
+          //기본 아스키코드
+          resultSize++;
+        } else if (c.indexOf('%u') != -1) {
+          //한글 혹은 기타
+          resultSize += 2;
+        } else {
+          resultSize++;
+        }
+      }
+
+      return resultSize;
+    }
+  },
+  computed: {
+    msgByte() {
+      return this.getByte(this.msg);
+    }
+  },
   created() {
-    console.info('<<< props', this.no);
+    this.getByte('안녕하세요. 좋은하루.');
     axios.get('/mock/message.json').then(result => {
       console.info('>> ', result);
+      for (let index = 0; index < 15; index++) {
+        result.data['20200110'].push({
+          key: 4 + index,
+          to: '01011112222',
+          otherCount: 5,
+          sendType: 'LMS',
+          sendTime: '151620',
+          succ: 10,
+          fail: 5,
+          wait: 5,
+          msg: '오후 동아리 모임 있습니다~'
+        });
+      }
       this.data = result.data;
     });
   }
@@ -102,7 +169,7 @@ export default {
   margin: 0 auto -50px;
 }
 .footer {
-  height: 50px;
+  height: 80px;
   position: sticky;
   bottom: 0;
 }
