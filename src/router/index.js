@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Message from '../views/Message/Message.vue';
 import Join from '../views/Join.vue';
-import SenderNumberManagement from '../views/SenderNumberManagement.vue';
+import SenderNumberManagement from '../views/SenderNumber/SenderNumberManagement.vue';
 // @ is an alias to /src
 import Content from '../views/Message/components/Content.vue';
 
