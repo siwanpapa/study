@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Message from '../views/Message/Message.vue';
 import Join from '../views/Join.vue';
+import SenderNumberManagement from '../views/SenderNumberManagement.vue';
 // @ is an alias to /src
 import Content from '../views/Message/components/Content.vue';
 
@@ -16,8 +17,13 @@ const routes = [
   },
   {
     path: '/join',
-    name: 'Join',
+    name: 'join',
     component: Join
+  },
+  {
+    path: '/senderNumberManagement',
+    name: 'senderNumberManagement',
+    component: SenderNumberManagement
   },
   {
     path: '/message',

@@ -5,6 +5,9 @@
         <v-toolbar-title>Vuetify</v-toolbar-title>
       </router-link>
       <v-subheader>Message</v-subheader>
+      <v-btn text to="/senderNumberManagement">
+        발신번호 관리
+      </v-btn>
       <v-spacer></v-spacer>
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
