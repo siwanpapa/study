@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import Message from '../views/Message/Message.vue';
 import Join from '../views/Join.vue';
 import SenderNumberManagement from '../views/SenderNumber/SenderNumberManagement.vue';
+import Address from '../views/Address/Address.vue';
 // @ is an alias to /src
 import Content from '../views/Message/components/Content.vue';
 
@@ -24,6 +25,11 @@ const routes = [
     path: '/senderNumberManagement',
     name: 'senderNumberManagement',
     component: SenderNumberManagement
+  },
+  {
+    path: '/Address',
+    name: 'Address',
+    component: Address
   },
   {
     path: '/message',

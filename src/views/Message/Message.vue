@@ -8,6 +8,9 @@
       <v-btn text to="/senderNumberManagement">
         발신번호 관리
       </v-btn>
+      <v-btn text to="/address">
+        주소록 관리
+      </v-btn>
       <v-spacer></v-spacer>
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
