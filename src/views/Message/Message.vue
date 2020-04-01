@@ -2,14 +2,17 @@
   <v-app>
     <v-app-bar app clipped-left color="teal">
       <router-link to="/">
-        <v-toolbar-title>Vuetify</v-toolbar-title>
+        <v-toolbar-title>홈</v-toolbar-title>
       </router-link>
-      <v-subheader>Message</v-subheader>
+      <v-subheader>문자방</v-subheader>
       <v-btn text to="/senderNumberManagement">
         발신번호 관리
       </v-btn>
       <v-btn text to="/address">
         주소록 관리
+      </v-btn>
+      <v-btn text to="/Usage">
+        이용량
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn icon>

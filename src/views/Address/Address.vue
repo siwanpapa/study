@@ -1,8 +1,10 @@
 <template lang="pug">
   v-app
     v-app-bar(app clipped-left color="orange" )
+      v-toolbar-title 주소록 관리
       v-btn(text to="/message") 문자방
       v-btn(text to="/senderNumberManagement") 발신번호 관리
+      v-btn(text to="/Usage") 이용량
     v-navigation-drawer(app clipped permanent)
       v-container
         v-row
