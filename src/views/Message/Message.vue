@@ -14,6 +14,9 @@
       <v-btn text to="/Usage">
         이용량
       </v-btn>
+      <v-btn text to="/MyInfo">
+        내정보
+      </v-btn>
       <v-spacer></v-spacer>
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>

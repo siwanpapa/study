@@ -6,6 +6,7 @@
       v-btn(text to="/message") 문자방
       v-btn(text to="/address") 주소록 관리
       v-btn(text to="/senderNumberManagement") 발신번호 관리
+      v-btn(text to="/MyInfo") 내정보
     v-content
       v-container
         v-card(width="600px")
