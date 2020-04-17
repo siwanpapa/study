@@ -30,12 +30,31 @@
             v-card-title 충전 내역
             v-card-text
               v-data-table(:headers="charge.headers" :items="charge.datas" item-key="idx" )           
-          v-card
+          v-card(class="mb-2")
             v-card-title 문의 내역
             v-card-text
               v-data-table(:headers="inquiry.headers" :items="inquiry.datas" item-key="idx" ) 
-            
-
+          div 
+            span 회원탈퇴를 원하시나요?
+            v-dialog( v-model="withdrawal" width="500" )
+              template(v-slot:activator="{ on }")
+                v-btn(color="teal lighten-5" v-on="on") 회원탈퇴
+              v-card
+                v-card-title 회원탈퇴
+                v-card-text 
+                  p(class="font-weight-bold") 탈퇴할 경우  보유계정(부계정 포함) 재상용 및 복구가 불가능 합니다.
+                  p 본인 및 타인 모두 재사용이 불가 하오니 신중하게 선택해 주세요.
+                  p
+                  p(class="font-weight-bold") 전송이력은 1년 동안 보관  후 파기 됩니다.
+                  p 관련법에 의거하여 전송이력을 보관하게 됨을 참고해 주시기 바랍니다.
+                  p
+                  v-checkbox(label="위 사항에 모두 동의 합니다.")
+                v-divider
+                v-card-actions
+                  v-spacer
+                  v-btn( color="primary" text @click="withdrawal = false") 취소
+                  v-btn( color="primary" text ) 탈퇴
+                  
 
 </template>
 
@@ -45,6 +64,7 @@ export default {
   data() {
     return {
       leftMenuSelected: 0,
+      withdrawal: false, // 회원탈퇴
       // 충전내역
       charge: {
         headers: [
