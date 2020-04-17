@@ -7,6 +7,7 @@ import SenderNumberManagement from '../views/SenderNumber/SenderNumberManagement
 import Address from '../views/Address/Address.vue';
 import Usage from '../views/Usage.vue';
 import MyInfo from '../views/MyInfo/MyInfo.vue';
+import Charge from '../views/Charge/Charge.vue';
 // @ is an alias to /src
 import Content from '../views/Message/components/Content.vue';
 
@@ -42,6 +43,11 @@ const routes = [
     path: '/MyInfo',
     name: 'MyInfo',
     component: MyInfo
+  },
+  {
+    path: '/Charge',
+    name: 'Charge',
+    component: Charge
   },
   {
     path: '/message',

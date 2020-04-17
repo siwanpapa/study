@@ -6,6 +6,7 @@
       v-btn(text to="/senderNumberManagement") 발신번호 관리
       v-btn(text to="/Usage") 이용량
       v-btn(text to="/Address") 주소록 관리
+      v-btn(text to="/Charge") 요금충전
     v-content
       v-container
         div(style="width:500px")
